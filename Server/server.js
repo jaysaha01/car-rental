@@ -13,12 +13,11 @@ const renterRouter = require('./app/routers/renter.router')
 app.use(cookieParser())
 
 app.use(cors({
-    origin: [
-        "http://localhost:3000",
-        "https://my-car-rental-frontend.vercel.app"
-    ],
-    credentials: true,
-}))
+  origin: 'https://car-rental-eta-bice.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 
 app.get('/', (req, res) => {
     res.send('Welcome to Car Renter System!')
