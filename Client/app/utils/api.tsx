@@ -39,7 +39,7 @@ interface profileData {
 }
 
 const instance = axios.create({
-  baseURL: 'http://localhost:4000/',
+  baseURL: 'https://my-car-rental-backend.onrender.com/',
   withCredentials: true,
 });
 
