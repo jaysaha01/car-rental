@@ -51,6 +51,9 @@ export function AppSidebar({ data }: sidebarProps) {
         mutationFn: signOut,
         onSuccess: () => {
             toast.success("Signed out successfully.", { position: "top-center" })
+            localStorage.clear();
+            queryClient.clear();
+
         },
         onError: () => {
             toast.error("Failed to sign out.", { position: "top-center" })

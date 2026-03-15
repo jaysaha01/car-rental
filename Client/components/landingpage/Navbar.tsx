@@ -28,6 +28,8 @@ const Navbar = () => {
         mutationFn: signOut,
         onSuccess: () => {
             toast.success("Signed out successfully.", { position: "top-center" })
+            localStorage.clear();
+            queryClient.clear();
             router.push("/login")
         },
         onError: () => {
