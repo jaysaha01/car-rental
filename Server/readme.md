@@ -51,6 +51,13 @@ Notes:
 Documentation : https://galactic-zodiac-91663.docs.buildwithfern.com/car-rental-system/profile
 
 
+-------------------------
+
+Admin email and password
+email: sahajay56@gmail.com,
+password: jayonetwotheeR2$
+
+
 
 
 
