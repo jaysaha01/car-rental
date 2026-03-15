@@ -13,11 +13,10 @@ const renterRouter = require('./app/routers/renter.router')
 app.use(cookieParser())
 
 app.use(cors({
- origin: [
-        "http://localhost:3000",
-        "https://horizon-car-rental.vercel.app"
-    ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: [
+    "http://localhost:3000",
+    "https://horizon-car-rental.vercel.app"
+  ],
   credentials: true
 }));
 

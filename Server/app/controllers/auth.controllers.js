@@ -49,8 +49,19 @@ class authController {
                 const compare = await comparePassword(password, findUser.password)
                 if (compare) {
                     let token = await tokenCreation(email, password)
-                    res.cookie('token', token)
-                    res.cookie('role', findUser.usertype)
+                    
+                    res.cookie('token', token, {
+                        httpOnly: true,
+                        secure: true,
+                        sameSite: "None",
+                        maxAge: 7 * 24 * 60 * 60 * 1000
+                    })
+                    res.cookie('role', findUser.usertype, {
+                        httpOnly: true,
+                        secure: true,
+                        sameSite: "None",
+                        maxAge: 7 * 24 * 60 * 60 * 1000
+                    })
                     res.json({
                         "message": "login Successfull !",
                         "data": findUser,
