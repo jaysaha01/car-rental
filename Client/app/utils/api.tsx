@@ -52,13 +52,9 @@ export async function createUser(data: useData): Promise<any> {
   }
 }
 
-export async function loginUser(data: useData): Promise<any> {
-  try {
-    const response = await instance.post("auth/loginaccount", data);
-    return response;
-  } catch (error) {
-    throw error;
-  }
+export async function loginUser(data: useData) {
+  const response = await axios.post("/api/login", data);
+  return response;
 }
 
 export async function submitVehicle(data: FormData): Promise<any> {
