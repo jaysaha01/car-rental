@@ -39,7 +39,7 @@ interface profileData {
 }
 
 const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PRODUCTION_URL,
+  baseURL: "https://my-car-rental-backend.onrender.com/",
   withCredentials: true,
 });
 
