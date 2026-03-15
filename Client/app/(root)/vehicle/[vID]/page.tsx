@@ -120,7 +120,7 @@ const page = () => {
       const { status, amount, currency, order_id } = res?.data;
       if (status === "created") {
         const options: RazorpayOrderOptions = {
-          key: process.env.NEXT_PUBLIC_PAYMENT_KEY || "",
+          key: "rzp_test_SODZFpwd64KYIJ",
           amount: amount,
           currency: "INR",
           name: "Horizon Company",
