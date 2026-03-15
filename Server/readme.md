@@ -1,7 +1,7 @@
 
 <h2>Work Flow</h2>
 
-1) Create Profile ✅ ✅
+1) Create Profile ✅
 
 2) Edit profile ✅
 
@@ -9,11 +9,11 @@
 
 4) Show Profile ✅
 
-5) Add vehicle by owner ✅ ✅
+5) Add vehicle by owner ✅ 
 
 6) Edit vehicle by owner ✅
 
-7) Delete vehicle by owner ✅ ✅
+7) Delete vehicle by owner ✅ 
 
 8) Approve vehicle by admin ✅
 
@@ -41,16 +41,14 @@
 
 20) Show Admin Dashboard data ✅
 
-
-
-
 -------------------
 Notes:
 
 1) save all the user name in db in lowercase
 
+-------------------
 
-
+Documentation : https://galactic-zodiac-91663.docs.buildwithfern.com/car-rental-system/profile
 
 
 

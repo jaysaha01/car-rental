@@ -315,7 +315,9 @@ class adminController {
                 transmission,
             } = req.query;
 
-            let filter = {};
+            let filter = {
+                status: "Confirmed"
+            };
 
             if (search && search.trim() !== "") {
                 filter.$or = [
@@ -325,13 +327,11 @@ class adminController {
                 ];
             }
 
-            // 🚗 VEHICLE TYPE
             if (vehicletype && vehicletype.trim() !== "") {
                 const vehicleArray = vehicletype.split(",").map(v => v.trim());
                 filter.vehicletype = { $in: vehicleArray };
             }
 
-        
             if (fueltype && fueltype.trim() !== "") {
                 const fuelArray = fueltype.split(",").map(f => f.trim());
                 filter.fueltype = { $in: fuelArray };
@@ -342,12 +342,11 @@ class adminController {
                 filter.transmission = { $in: transmissionArray };
             }
 
-
             const vehicles = await vehicleModel.find(filter);
 
             res.status(200).json({
                 success: true,
-                message: "All Vehicles Fetch Successfully!",
+                message: "All Confirmed Vehicles Fetch Successfully!",
                 data: vehicles,
             });
 
@@ -362,8 +361,8 @@ class adminController {
 
     async allhomeVehicles(req, res) {
         try {
-           
-            const vehicles = await vehicleModel.find({status:"Confirmed"});
+
+            const vehicles = await vehicleModel.find({ status: "Confirmed" });
 
             res.status(200).json({
                 success: true,
@@ -382,7 +381,7 @@ class adminController {
 
     async alladminVehicles(req, res) {
         try {
-           
+
             const vehicles = await vehicleModel.find();
 
             res.status(200).json({

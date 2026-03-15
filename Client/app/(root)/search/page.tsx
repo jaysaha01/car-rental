@@ -87,7 +87,6 @@ const page = () => {
     }
 
 
-
     return (
         <div className="mt-15">
             <div className="serchbox bg-gradient-to-r from-green-400 to-blue-500 p-10">
@@ -112,7 +111,6 @@ const page = () => {
                                 <h2 className="font-semibold text-lg">Filters</h2>
 
                                 <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
-                                    {/* 1 */}
                                 </div>
                             </div>
                             <div className="space-y-6">

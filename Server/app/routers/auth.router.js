@@ -7,5 +7,6 @@ router.post('/createaccount', authController.createAccount)
 router.post('/loginaccount', authController.loginAccount)
 router.post('/updateaccount', authMiddlware, authController.updateAccount)
 router.get('/profile', authMiddlware, authController.myProfile)
+router.post('/logout', authController.logoutProfile)
 
 module.exports = router

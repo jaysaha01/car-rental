@@ -39,7 +39,7 @@ interface profileData {
 }
 
 const instance = axios.create({
-  baseURL: 'https://my-car-rental-backend.onrender.com/',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PRODUCTION_URL,
   withCredentials: true,
 });
 
@@ -303,6 +303,15 @@ export const renterDashboardData = async () => {
 export const updateProfile = async (data: profileData) => {
   try {
     const response = await instance.post("/auth/updateaccount", data);
+    return response;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export const signOut = async () => {
+  try {
+    const response = await instance.post("/auth/logout");
     return response;
   } catch (err) {
     throw err;

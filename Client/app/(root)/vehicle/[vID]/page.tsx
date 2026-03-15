@@ -3,14 +3,14 @@
 import React, { useEffect } from 'react'
 import Slider from '@/components/detailpage/Slider'
 import { Badge } from "@/components/ui/badge"
-import {IconCircleCheck, IconShieldCheck, IconMapPin } from '@tabler/icons-react';
+import { IconCircleCheck, IconShieldCheck, IconMapPin } from '@tabler/icons-react';
 import {
   Avatar,
   AvatarBadge,
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar"
-import { showVehicle } from '@/app/utils/api';
+import { profileData, showVehicle } from '@/app/utils/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { IconGasStation, IconCarSuv, IconUsers, IconCalendarWeek, IconPhoneDone } from '@tabler/icons-react';
@@ -68,6 +68,12 @@ const page = () => {
     enabled: !!vid
   })
 
+  const { data: userProfile } = useQuery({
+    queryKey: ['profile'],
+    queryFn: profileData
+  })
+
+
   const mutation = useMutation({
     mutationFn: ({ startDate, endDate, serviceFee, cost, total, tax, payment }: vehicleBookData) => bookVehicle(vid, { startDate, endDate, serviceFee, cost, total, tax, payment }),
     onSuccess: () => {
@@ -114,10 +120,10 @@ const page = () => {
       const { status, amount, currency, order_id } = res?.data;
       if (status === "created") {
         const options: RazorpayOrderOptions = {
-          key: "rzp_test_SODZFpwd64KYIJ",
+          key: process.env.NEXT_PUBLIC_PAYMENT_KEY || "",
           amount: amount,
           currency: "INR",
-          name: "Test Company",
+          name: "Horizon Company",
           description: "Test Transaction",
           order_id: order_id,
           handler: (response) => {
@@ -143,9 +149,9 @@ const page = () => {
             }
           },
           prefill: {
-            name: "John Doe",
-            email: "john.doe@example.com",
-            contact: "9999999999",
+            name: "Ranajay Saha",
+            email: "sahajay426@gmail.com",
+            contact: "9804771533",
           },
           theme: {
             color: "#F37254",
@@ -163,7 +169,7 @@ const page = () => {
     }
   });
 
-  if (isPending) return <Myloading/>
+  if (isPending) return <Myloading />
 
   async function payment() {
     try {
@@ -261,7 +267,7 @@ const page = () => {
             </div>
             <div className='sm:w-5/5 lg:w-2/5 md:w-2/5 relative mb-5 md:mb-0 sm:mb-0'>
               <div className='sticky top-10 p-7 bg-white rounded-2xl border-gray-240 shadow-xl/20'>
-                <h4 className='text-2xl font-bold mb-8'>${priceperday}<span className='text-gray-500 font-normal'>/day</span></h4>
+                <h4 className='text-2xl font-bold mb-8'>₹{priceperday}<span className='text-gray-500 font-normal'>/day</span></h4>
                 <div className='flex gap-5 border-b border-gray-200 pb-5'>
 
                   <AlertDialog>
@@ -319,24 +325,25 @@ const page = () => {
                 </div>
                 <div className='pb-4 border-b border-gray-200 pt-5'>
                   <div className='flex justify-between mb-2'>
-                    <p className='text-gray-500'>${priceperday} × {bookigDetails?.diffdate} days</p>
-                    <p>${bookigDetails?.cost}</p>
+                    <p className='text-gray-500'>₹ {priceperday} × {bookigDetails?.diffdate} days</p>
+                    <p>{bookigDetails?.cost}</p>
                   </div>
                   <div className='flex justify-between mb-2'>
-                    <p className='text-gray-500'>Service fee</p>
-                    <p>${bookigDetails?.serviceFee}</p>
+                    <p className='text-gray-500'>₹ Service fee</p>
+                    <p>{bookigDetails?.serviceFee}</p>
                   </div>
                   <div className='flex justify-between mb-2'>
-                    <p className='text-gray-500'>Taxes</p>
-                    <p>${bookigDetails?.tax}</p>
+                    <p className='text-gray-500'>₹ Taxes</p>
+                    <p>{bookigDetails?.tax}</p>
                   </div>
                 </div>
                 <div className='flex justify-between border-b border-gray-200 p-3 mb-4'>
                   <p className='font-bold'>Total</p>
-                  <p>${bookigDetails?.total}</p>
+                  <p>{bookigDetails?.total}</p>
                 </div>
                 <Button
                   className='w-full bg-amber-500 p-6'
+                  disabled={userProfile?.data?.data?.usertype === "Admin" || userProfile?.data?.data?.usertype === "Owner" || bookigDetails.diffdate <= 0}
                   style={{ fontSize: "20px" }}
                   onClick={() => payment()}
                 >

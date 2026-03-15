@@ -1,17 +1,17 @@
 const user = require("../models/user.model")
 const authValidator = require("../helper/validateauthdata")
 const { hassingPassword, comparePassword } = require("../helper/encription")
-const { tokenCreation} = require("../helper/jwtoken")
+const { tokenCreation } = require("../helper/jwtoken")
 
 class authController {
     async createAccount(req, res) {
         try {
             authValidator(req, res)
-            const { name, email, password, phone, usertype} = req.body
+            const { name, email, password, phone, usertype } = req.body
             let findUser = await user.find({ "email": email })
             if (findUser.length == 0) {
                 let hasedPassword = await hassingPassword(password)
-                let userData = { "name": name, "email": email, "password": hasedPassword, "phone": phone, "usertype": usertype}
+                let userData = { "name": name, "email": email, "password": hasedPassword, "phone": phone, "usertype": usertype }
                 const userCreated = new user(userData);
                 let myseavedData = await userCreated.save();
                 res.json({
@@ -94,13 +94,12 @@ class authController {
 
             if (submitData.includes(notAllowed) === false) {
                 let lginUser = req.loginUser
-                let updateMyprofile = await user.findOneAndUpdate({ email: lginUser?.email }, {$set:{name: req?.body?.name}},{ returnDocument: "after"})
-                console.log(updateMyprofile, '👤')
+                let updateMyprofile = await user.findOneAndUpdate({ email: lginUser?.email }, { $set: { name: req?.body?.name } }, { returnDocument: "after" })
                 res.json({
                     "message": "Profile Update Successfully !",
                     'data': updateMyprofile
                 })
-            }else{
+            } else {
                 res.json({
                     "message": "Faild to update, Please update only your Name!"
                 })
@@ -112,6 +111,19 @@ class authController {
             })
         }
     }
+
+    async logoutProfile(req, res) {
+        try {
+            res.cookie("token", null, {
+                expires: new Date(Date.now())
+            })
+            res.cookie("role", null)
+            res.send()
+        } catch (err) {
+
+        }
+    }
+
 }
 
 module.exports = new authController

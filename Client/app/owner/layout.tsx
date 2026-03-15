@@ -49,8 +49,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard",
-  description: "Admin Dashboard",
+  title: "Horizon | Car Rental Service | Owner",
+  description: "Horizon is a car rental service that offers a wide range of vehicles for rent. Whether you need a car for a day, a week, or a month, Horizon has you covered. With our easy-to-use platform, you can quickly find and book the perfect car for your needs. Our fleet includes everything from compact cars to luxury SUVs, so you can choose the right vehicle for your trip. Plus, with our competitive pricing and excellent customer service, you can trust Horizon to provide you with a seamless car rental experience.",
 };
 
 export default function RootLayout({

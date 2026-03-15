@@ -12,7 +12,6 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-import { IconHome } from "@tabler/icons-react"
 import { FiHome } from "react-icons/fi";
 import { LuUsers } from "react-icons/lu";
 import { FaCar } from "react-icons/fa";
@@ -20,6 +19,10 @@ import { SlCalender } from "react-icons/sl";
 import { usePathname } from "next/navigation";
 import { IconType } from "react-icons";
 import Image from "next/image";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { signOut } from "@/app/utils/api";
+import { toast } from "sonner";
+import { IconLogout2 } from '@tabler/icons-react';
 
 interface AppSidebarProps {
     name: string;
@@ -42,6 +45,17 @@ const iconMap: Record<string, IconType> = {
 export function AppSidebar({ data }: sidebarProps) {
     let path = usePathname()
 
+    const queryClient = useQueryClient()
+
+    const mutation = useMutation({
+        mutationFn: signOut,
+        onSuccess: () => {
+            toast.success("Signed out successfully.", { position: "top-center" })
+        },
+        onError: () => {
+            toast.error("Failed to sign out.", { position: "top-center" })
+        }
+    })
 
     return (
         <Sidebar>
@@ -97,14 +111,16 @@ export function AppSidebar({ data }: sidebarProps) {
             <SidebarFooter className="border-t border-gray-300">
                 <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                        <Link href="/">
-                            <div className="flex items-center gap-3 hover:bg-accent hover:text-accent-foreground p-2 rounded-md">
-                                <SlCalender className="w-6 h-6 text-gray-500" />
-                                <span className="text-gray-500 text-lg">
-                                    Sign Out
-                                </span>
-                            </div>
-                        </Link>
+
+                        <div className="flex items-center gap-3 hover:bg-accent hover:text-accent-foreground p-2 rounded-md">
+                            <IconLogout2 className="w-6 h-6 text-gray-500" />
+                            <span className="text-gray-500 " onClick={() => {
+                                mutation.mutate()
+                            }}>
+                                Sign Out
+                            </span>
+                        </div>
+
                     </SidebarMenuButton>
                 </SidebarMenuItem>
             </SidebarFooter>        </Sidebar>

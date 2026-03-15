@@ -1,7 +1,7 @@
 "use client"
 
-import { profileData } from '@/app/utils/api'
-import { useQuery } from '@tanstack/react-query'
+import { profileData, signOut } from '@/app/utils/api'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { IconCategory } from '@tabler/icons-react';
@@ -15,13 +15,31 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import Image from 'next/image'
+import { toast } from 'sonner'
+import { useRouter } from "next/navigation"
+
 
 const Navbar = () => {
+
+    const router = useRouter()
+    const queryClient = useQueryClient()
+
+    const mutation = useMutation({
+        mutationFn: signOut,
+        onSuccess: () => {
+            toast.success("Signed out successfully.", { position: "top-center" })
+            router.push("/login")
+        },
+        onError: () => {
+            toast.error("Failed to sign out.", { position: "top-center" })
+        }
+    })
 
     const { isPending, error, data } = useQuery({
         queryKey: ['viewProfile'],
         queryFn: () => profileData()
     })
+
 
     let dashboard;
 
@@ -77,15 +95,17 @@ const Navbar = () => {
                                                 <Link href={`/${dashboard}/dashboard`}> <Button type="button" variant="outline" className='w-full border border-gray-300 shadow-none'>
                                                     Dashboard
                                                 </Button></Link>
-                                                <Button type="button" className="bg-blue-500 text-white border border-blue-700 shadow-none">
+                                                <Button type="button" className="bg-blue-500 text-white border border-blue-700 shadow-none" onClick={() => {
+                                                    mutation.mutate()
+                                                }}>
                                                     Sign Out
                                                 </Button>
                                             </>
 
                                         ) : (
-                                            <Button type="button" variant="outline">
+                                            <Link href={`/login`}><Button type="button" variant="outline">
                                                 Sign In
-                                            </Button>
+                                            </Button></Link>
                                         )
                                     }
                                 </SheetClose>
@@ -105,7 +125,9 @@ const Navbar = () => {
                                 <Link href={`/${dashboard}/dashboard`} className='text-gray-500'>
                                     Dashboard
                                 </Link>
-                                <Button type="button" className="bg-blue-500 text-white shadow-none">
+                                <Button type="button" className="bg-blue-500 text-white shadow-none" onClick={() => {
+                                    mutation.mutate()
+                                }}>
                                     Sign Out
                                 </Button>
                             </>
