@@ -57,7 +57,7 @@ class authController {
                         path: "/"
                     });
 
-                    res.cookie("role", user.usertype, {
+                    res.cookie("role", findUser.usertype, {
                         httpOnly: true,
                         secure: true,
                         sameSite: "none",
