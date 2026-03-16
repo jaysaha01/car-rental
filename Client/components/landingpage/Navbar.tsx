@@ -17,6 +17,7 @@ import {
 import Image from 'next/image'
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation"
+import { useEffect, useState } from 'react'
 
 
 const Navbar = () => {
@@ -24,11 +25,30 @@ const Navbar = () => {
     const router = useRouter()
     const queryClient = useQueryClient()
 
+    const [localUser, setLocalUser] = useState<String>("")
+
+    useEffect(() => {
+        const stored = localStorage.getItem("role")
+        if (stored) {
+            setLocalUser(stored)
+        }
+    }, [])
+
+    let dashboard;
+    if (localUser === "Owner") {
+        dashboard = "owner";
+    } else if (localUser === "Renter") {
+        dashboard = "renter";
+    } else if (localUser === "Admin") {
+        dashboard = "admin";
+    }
+
     const mutation = useMutation({
         mutationFn: signOut,
         onSuccess: () => {
             toast.success("Signed out successfully.", { position: "top-center" })
             localStorage.clear();
+            setLocalUser("")
             queryClient.clear();
             router.push("/login")
         },
@@ -36,22 +56,6 @@ const Navbar = () => {
             toast.error("Failed to sign out.", { position: "top-center" })
         }
     })
-
-    const { isPending, error, data } = useQuery({
-        queryKey: ['viewProfile'],
-        queryFn: () => profileData()
-    })
-
-
-    let dashboard;
-
-    if (data?.data?.data?.usertype === "Owner") {
-        dashboard = "owner";
-    } else if (data?.data?.data?.usertype === "Renter") {
-        dashboard = "renter";
-    } else {
-        dashboard = "admin";
-    }
 
     return (
         <>
@@ -92,7 +96,7 @@ const Navbar = () => {
                                 <SheetClose asChild>
 
                                     {
-                                        data?.data?.data?.usertype ? (
+                                        localUser ? (
                                             <>
                                                 <Link href={`/${dashboard}/dashboard`}> <Button type="button" variant="outline" className='w-full border border-gray-300 shadow-none'>
                                                     Dashboard
@@ -122,7 +126,7 @@ const Navbar = () => {
                     <a href="/#why" className='text-gray-500 hover:text-gray-800'>Why Horizon</a>
                     <a href="/#testimonials" className='text-gray-500 hover:text-gray-800'>Testimonial</a>
                     {
-                        data?.data?.data?.usertype ? (
+                        localUser ? (
                             <>
                                 <Link href={`/${dashboard}/dashboard`} className='text-gray-500'>
                                     Dashboard
