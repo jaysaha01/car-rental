@@ -18,16 +18,17 @@ export async function POST(req: Request) {
 
   const response = NextResponse.json(data);
 
-  // set cookie in Next.js domain
   response.cookies.set("role", data.data.usertype, {
     httpOnly: true,
     secure: true,
+    sameSite: "lax",
     path: "/",
   });
 
   response.cookies.set("token", data.token, {
     httpOnly: true,
     secure: true,
+    sameSite: "lax",
     path: "/",
   });
 
