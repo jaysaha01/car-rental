@@ -2,7 +2,7 @@ const { varifyToken } = require("../helper/jwtoken")
 const user = require('../models/user.model')
 
 async function authMiddleware(req, res, next) {
-    const mytoken = req.cookies.token;
+    const mytoken = req.cookies.mytoken;
     if(!mytoken){
          res.json({
             "message": "Please login your account",

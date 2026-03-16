@@ -50,14 +50,14 @@ class authController {
                 if (compare) {
                     let token = await tokenCreation(email, password)
 
-                    res.cookie("token", token, {
+                    res.cookie("mytoken", token, {
                         httpOnly: true,
                         secure: true,
                         sameSite: "none",
                         path: "/"
                     });
 
-                    res.cookie("role", findUser.usertype, {
+                    res.cookie("myrole", findUser.usertype, {
                         httpOnly: true,
                         secure: true,
                         sameSite: "none",
