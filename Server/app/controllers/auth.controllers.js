@@ -50,19 +50,19 @@ class authController {
                 if (compare) {
                     let token = await tokenCreation(email, password)
 
-                    // res.cookie("token", token, {
-                    //     httpOnly: true,
-                    //     secure: true,
-                    //     sameSite: "none",
-                    //     path: "/"
-                    // });
+                    res.cookie("token", token, {
+                        httpOnly: true,
+                        secure: true,
+                        sameSite: "none",
+                        path: "/"
+                    });
 
-                    // res.cookie("role", findUser.usertype, {
-                    //     httpOnly: true,
-                    //     secure: true,
-                    //     sameSite: "none",
-                    //     path: "/"
-                    // });
+                    res.cookie("role", findUser.usertype, {
+                        httpOnly: true,
+                        secure: true,
+                        sameSite: "none",
+                        path: "/"
+                    });
                     res.json({
                         "message": "login Successfull !",
                         "data": findUser,
