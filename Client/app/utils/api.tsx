@@ -39,7 +39,7 @@ interface profileData {
 }
 
 const instance = axios.create({
-  baseURL: "/backend/",
+  baseURL: "/api/backend/",
   withCredentials: true,
 });
 
@@ -94,7 +94,6 @@ export async function showAllVehicle(filters: {
     const response = await instance.get("api/show-vehicles", {
       params: filters,
     });
-
     return response.data;
   } catch (error) {
     throw error;
@@ -156,7 +155,6 @@ export async function allVehicles(filters: any): Promise<any> {
     throw error;
   }
 }
-
 
 export async function allAdminVehicles(): Promise<any> {
   try {
@@ -241,7 +239,7 @@ export async function cancleBookigVehicle(bid: string): Promise<any> {
 
 export const editVehicle = async (vehicleId: string, formData: FormData) => {
   try {
-    const response = await instance.post(`/api/edit-vehicle/${vehicleId}`, formData)
+    const response = await instance.post(`api/edit-vehicle/${vehicleId}`, formData)  // ✅ fixed
     return response
   } catch (error) {
     throw error;
@@ -250,7 +248,7 @@ export const editVehicle = async (vehicleId: string, formData: FormData) => {
 
 export const getVehicleById = async (vehicleId: string) => {
   try {
-    const response = await instance.get(`/api/view-my-vehicles/${vehicleId}`)
+    const response = await instance.get(`api/view-my-vehicles/${vehicleId}`)  // ✅ fixed
     return response
   } catch (err) {
     throw err;
@@ -259,10 +257,8 @@ export const getVehicleById = async (vehicleId: string) => {
 
 export const paymeyVehicle = async (amount: number | string) => {
   try {
-     const amountInPaisa = Math.round(Number(amount))
-    const response = await instance.post(
-      `/api/payment-vehicle/${amountInPaisa}`
-    )
+    const amountInPaisa = Math.round(Number(amount))
+    const response = await instance.post(`api/payment-vehicle/${amountInPaisa}`)  // ✅ fixed
     return response
   } catch (err) {
     throw err
@@ -271,7 +267,7 @@ export const paymeyVehicle = async (amount: number | string) => {
 
 export const searchUser = async (searchTerm: string) => {
   try {
-    const response = await instance.post(`/api/search-user/${searchTerm}`);
+    const response = await instance.post(`api/search-user/${searchTerm}`);  // ✅ fixed
     return response;
   } catch (err) {
     throw err;
@@ -280,7 +276,7 @@ export const searchUser = async (searchTerm: string) => {
 
 export const deleteUser = async (searchTerm: string) => {
   try {
-    const response = await instance.delete(`/api/delete-user/${searchTerm}`);
+    const response = await instance.delete(`api/delete-user/${searchTerm}`);  // ✅ fixed
     return response;
   } catch (err) {
     throw err;
@@ -289,7 +285,7 @@ export const deleteUser = async (searchTerm: string) => {
 
 export const renterDashboardData = async () => {
   try {
-    const response = await instance.get("/api/renter-dashboard");
+    const response = await instance.get("api/renter-dashboard");  // ✅ fixed
     return response;
   } catch (err) {
     throw err;
@@ -298,7 +294,7 @@ export const renterDashboardData = async () => {
 
 export const updateProfile = async (data: profileData) => {
   try {
-    const response = await instance.post("/auth/updateaccount", data);
+    const response = await instance.post("auth/updateaccount", data);  // ✅ fixed
     return response;
   } catch (err) {
     throw err;
@@ -307,7 +303,7 @@ export const updateProfile = async (data: profileData) => {
 
 export const signOut = async () => {
   try {
-    const response = await instance.post("/auth/logout");
+    const response = await instance.post("auth/logout");  // ✅ fixed
     return response;
   } catch (err) {
     throw err;

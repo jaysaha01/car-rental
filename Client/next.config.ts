@@ -17,14 +17,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return [
-      {
-        source: "/backend/:path*",
-        destination: "https://my-car-rental-backend.onrender.com/:path*",
-      },
-    ];
-  },
 };
 
 export default nextConfig;
