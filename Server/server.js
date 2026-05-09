@@ -15,7 +15,7 @@ app.use(cookieParser())
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://car-rental-horizon.onrender.com/"
+    "https://car-rental-horizon.onrender.com",
   ],
   credentials: true
 }));
